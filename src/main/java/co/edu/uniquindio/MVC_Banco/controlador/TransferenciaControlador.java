@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  */
 public class TransferenciaControlador implements Initializable {
     @FXML
-    private TextField txtNumeroCuenta;
+    private TextField txtCuenta;
     @FXML
     private TextField txtMonto;
     @FXML
@@ -27,13 +27,14 @@ public class TransferenciaControlador implements Initializable {
     private final Banco banco = Banco.getInstancia();
     private final Sesion sesion = Sesion.getInstancia();
     private Observable observable;
+    private CategoriaTransaccion categoriaTransaccion;
 
     public void transferir(ActionEvent actionEvent){
         try{
-            String numeroCuenta = txtNumeroCuenta.getText();
+            String numeroCuenta = txtCuenta.getText();
             float monto = Float.parseFloat(txtMonto.getText());
             CategoriaTransaccion categoria = txtCategoria.getValue();
-            String numeroCuentaOrigen = sesion.getCuentaAhorros().getCuenta();
+            String numeroCuentaOrigen = sesion.getCuentaAhorros().getNumeroCuenta();
 
             if(numeroCuenta.isEmpty() || monto <= 0 || categoria == null){
                 crearAlerta("Todos los campos son obligatorios", Alert.AlertType.ERROR);
@@ -52,12 +53,9 @@ public class TransferenciaControlador implements Initializable {
         txtCategoria.setItems(FXCollections.observableArrayList(CategoriaTransaccion.values()));
     }
 
-    /**
-     * Método que se encarga de cerrar la ventana actual.
-     */
-    public void cerrarVentana(){
-        Stage stage = (Stage) txtNumeroCuenta.getScene().getWindow();
-        stage.close();
+    public void seleccionar(ActionEvent event) {
+        CategoriaTransaccion  categoriaTransaccion = txtCategoria.getSelectionModel().getSelectedItem();
+        this.categoriaTransaccion = categoriaTransaccion;
     }
 
     /**
@@ -71,6 +69,14 @@ public class TransferenciaControlador implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
         alert.showAndWait();
+    }
+
+    /**
+     * Método que se encarga de cerrar la ventana actual.
+     */
+    public void cerrarVentana(){
+        Stage stage = (Stage) txtCuenta.getScene().getWindow();
+        stage.close();
     }
 
     public void inicializarObservable(Observable observable){

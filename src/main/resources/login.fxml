@@ -14,14 +14,14 @@
 
 <VBox alignment="center" prefHeight="400.0" prefWidth="400.0" spacing="30.0" style="-fx-background-color: #faf6f0;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.MVC_Banco.controlador.LoginControlador">
 
-    <Label text="Iniciar sesión" textAlignment="JUSTIFY">
+    <Label text="Iniciar Sesión" textAlignment="JUSTIFY">
         <font>
             <Font size="18.0" />
         </font>
     </Label>
 
     <GridPane alignment="CENTER" hgap="10.0" vgap="10.0">
-        <Label text="Número de identificación:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <Label text="Número de Identificación:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
         <TextField fx:id="txtIdentificacion" alignment="TOP_LEFT" minHeight="30.0" nodeOrientation="RIGHT_TO_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="0">
          <effect>
             <Blend />
@@ -48,6 +48,6 @@
       </rowConstraints>
     </GridPane>
 
-    <Button minHeight="40.0" minWidth="130.0" onAction="#iniciarSesion" style="-fx-background-color: #fcb203;     -fx-text-fill: black;" text="Iniciar sesión" />
+    <Button minHeight="40.0" minWidth="130.0" onAction="#iniciarSesion" style="-fx-background-color: #fcb203;     -fx-text-fill: black;" text="Iniciar Sesión" />
 
 </VBox>

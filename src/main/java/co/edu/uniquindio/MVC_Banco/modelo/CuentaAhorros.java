@@ -16,14 +16,14 @@ import java.util.List;
 @ToString
 public class CuentaAhorros {
 
-    private final String cuenta;
+    private final String numeroCuenta;
     private final Usuario propietario;
     private float saldo;
     private final List<Transaccion> transacciones;
     public static CuentaAhorros INSTANCIA;
 
-    private CuentaAhorros(String cuenta, Usuario propietario, float saldoInicial) {
-        this.cuenta = cuenta;
+    private CuentaAhorros(String numeroCuenta, Usuario propietario, float saldoInicial) {
+        this.numeroCuenta = numeroCuenta;
         this.propietario = propietario;
         this.saldo = saldoInicial;
         this.transacciones = new ArrayList<>();
@@ -58,8 +58,7 @@ public class CuentaAhorros {
      * @param cuentaDestino cuenta de destino de la transferencia.
      * @param categoria categoría de la transacción.
      */
-    public void transferir(float cantidad, CuentaAhorros cuentaDestino, CategoriaTransaccion categoria)
-            throws Exception{
+    public void transferir(float cantidad, CuentaAhorros cuentaDestino, CategoriaTransaccion categoria) throws Exception{
 
         // Se cobra 200 por cada transferencia
         cantidad += 200;
@@ -107,19 +106,5 @@ public class CuentaAhorros {
             }
         }
         return transaccionesMes;
-    }
-
-    /**
-     *
-     * Método estático para obtener la instancia de la clase Cuenta de Ahorros, esto permite que solo exista una única
-     * instancia de la clase cuenta de ahorros para toda la aplicación lo cual permite compartir los datos almacenados
-     * en las listas de cuentasAhorros de manera sincronizada.
-     * @return INSTANCIA
-     */
-    public static CuentaAhorros getInstancia(String numeroCuenta, Usuario propietario, float saldo){
-        if(INSTANCIA == null){
-            INSTANCIA = new CuentaAhorros(numeroCuenta, propietario, saldo);
-        }
-        return INSTANCIA;
     }
 }

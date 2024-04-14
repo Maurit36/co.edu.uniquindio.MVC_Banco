@@ -2,6 +2,7 @@ package co.edu.uniquindio.MVC_Banco.modelo;
 
 import co.edu.uniquindio.MVC_Banco.modelo.enums.CategoriaTransaccion;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ public class Banco {
     private final ArrayList<Usuario> usuarios;
     private final ArrayList<CuentaAhorros> cuentasAhorros;
     public static Banco INSTANCIA;
+    private final Sesion sesion = Sesion.getInstancia();
 
     private Banco() {
         usuarios = new ArrayList<>();
@@ -27,16 +29,14 @@ public class Banco {
      */
     private void llenarDatosPrueba(){
         try {
-
-            agregarUsuario("123", "Carlos", "carlos@email.com",
-                    "Calle 1", "123");
-            agregarUsuario("456", "Juan", "juan@email.com", "Calle 2",
-                    "456");
-            agregarCuentaAhorros("123", 1000);
-            agregarCuentaAhorros("456", 2000);
+            agregarUsuario("1076564987", "Carlos Andrés Florez", "caflorez@uniquindio.edu.co",
+                    "Calle 19N # 44 - 69 Piso 2", "123abc");
+            agregarUsuario("51345982", "Rosalba Marín", "rosalba.marin@gmail.com", "Carrera 29 # 18 - 18 Conjuntos Almendros Piso 6",
+                    "456qwe");
+            agregarCuentaAhorros("1076564987", 534987);
+            agregarCuentaAhorros("51345982", 85398);
 
             System.out.println(cuentasAhorros);
-
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -51,9 +51,7 @@ public class Banco {
      * @param contrasena contraseña del usuario.
      * @throws Exception si el número de identificación ya existe o si alguno de los campos es nulo o vacío.
      */
-    public void agregarUsuario(String numeroIdentificacion, String nombre, String correoElectronico, String direccion,
-                               String contrasena) throws Exception{
-
+    public void agregarUsuario(String numeroIdentificacion, String nombre, String correoElectronico, String direccion, String contrasena) throws Exception{
         if(numeroIdentificacion == null || numeroIdentificacion.isBlank()){
             throw new Exception("El número de identificación es obligatorio");
         }
@@ -68,6 +66,10 @@ public class Banco {
 
         if(correoElectronico == null || correoElectronico.isBlank()){
             throw new Exception("El correo electronico es obligatorio");
+        }
+
+        if(direccion == null || direccion.isBlank()){
+            throw new Exception("La dirección es obligatorio");
         }
 
         if(contrasena == null || contrasena.isBlank()){
@@ -85,7 +87,6 @@ public class Banco {
                 .direccion(direccion)
                 .contrasena(contrasena)
                 .build();
-
         usuarios.add(usuario);
     }
 
@@ -97,36 +98,36 @@ public class Banco {
      * @param correoElectronico correo electrónico del usuario.
      * @param contrasena contraseña del usuario.
      */
-    public void actualizarUsuario(String nombre, String direccion, String numeroIdentificacion,
-                                  String correoElectronico, String contrasena) throws Exception{
+    public void actualizarUsuario(String numeroIdentificacion, String nombre, String correoElectronico, String direccion, String contrasena) throws Exception{
+        if(obtenerUsuario(numeroIdentificacion) == null){
+            throw new Exception("No existe un usuario con el número de identificación: "+numeroIdentificacion);
+        }
 
         if(nombre == null || nombre.isBlank()){
             throw new Exception("El nombre es obligatorio");
-        }
-
-        if(direccion == null || direccion.isBlank()){
-            throw new Exception("La dirección es obligatoria");
         }
 
         if(correoElectronico == null || correoElectronico.isBlank()){
             throw new Exception("El correo electronico es obligatorio");
         }
 
+        if(direccion == null || direccion.isBlank()){
+            throw new Exception("La dirección es obligatoria");
+        }
+
         if(contrasena == null || contrasena.isBlank()){
             throw new Exception("La contraseña es obligatoria");
         }
 
-        if(obtenerUsuario(numeroIdentificacion) == null){
-            throw new Exception("No existe un usuario con el número de identificación: "+numeroIdentificacion);
-        }
+        Usuario usuario = obtenerUsuario(numeroIdentificacion);
 
-        for (int i = 0; i < usuarios.size(); i++) {
-            if (usuarios.get(i).getNumeroIdentificacion().equals(numeroIdentificacion)) {
-                Usuario usuario = new Usuario(nombre, direccion, numeroIdentificacion, correoElectronico, contrasena);
-                usuarios.set(i, usuario);
-                break;
-            }
+        if (usuario == null) {
+            throw new Exception("No existe un usuario con el número de identificación: " + numeroIdentificacion);
         }
+        usuario.setNombre(nombre);
+        usuario.setDireccion(direccion);
+        usuario.setCorreoElectronico(correoElectronico);
+        usuario.setContrasena(contrasena);
     }
 
     /**
@@ -151,18 +152,18 @@ public class Banco {
      * @return número de cuenta.
      * @throws Exception si no se encuentra el usuario.
      */
-    public String agregarCuentaAhorros(String numeroIdentificacion, float saldoInicial) throws Exception{
+    public String agregarCuentaAhorros(String numeroIdentificacion, float saldoInicial) throws Exception {
         Usuario propietario = obtenerUsuario(numeroIdentificacion);
 
-        if(propietario != null){
+        if (propietario != null) {
             String numeroCuenta = crearNumeroCuenta();
-            CuentaAhorros cuentaAhorros = CuentaAhorros.getInstancia(numeroCuenta, propietario, saldoInicial);
+            CuentaAhorros cuentaAhorros = new CuentaAhorros(numeroCuenta, propietario, saldoInicial);
             cuentasAhorros.add(cuentaAhorros);
 
             return numeroCuenta;
         }
 
-        throw new Exception("No se encontró el usuario con el número de identificación: "+numeroIdentificacion);
+        throw new Exception("No se encontró el usuario con el número de identificación: " + numeroIdentificacion);
 
     }
 
@@ -171,13 +172,11 @@ public class Banco {
      * @return número de cuenta.
      */
     private String crearNumeroCuenta(){
-
         String numeroCuenta = generarNumeroCuenta();
 
         while(obtenerCuentaAhorros(numeroCuenta) != null){
             numeroCuenta = generarNumeroCuenta();
         }
-
         return numeroCuenta;
     }
 
@@ -192,7 +191,6 @@ public class Banco {
             int numero = new Random().nextInt(10);
             numeroCuenta.append(numero);
         }
-
         return numeroCuenta.toString();
     }
 
@@ -222,7 +220,6 @@ public class Banco {
      * @throws Exception si los datos de acceso son incorrectos.
      */
     public List<CuentaAhorros> consultarCuentasUsuario(String identificacion, String contrasena) throws Exception{
-
         Usuario usuario = validarUsuario(identificacion, contrasena);
 
         if(usuario != null){
@@ -238,16 +235,6 @@ public class Banco {
         return null;
     }
 
-    public CuentaAhorros consultarCuenta(String numeroIdentificacion) {
-
-        for (CuentaAhorros cuentaAhorros : cuentasAhorros){
-            if (cuentaAhorros.getPropietario().getNumeroIdentificacion().equalsIgnoreCase(numeroIdentificacion)){
-                return cuentaAhorros;
-            }
-        }
-        return null;
-    }
-
     /**
      * Método que realiza una transferencia entre cuentas de ahorros.
      * @param numeroCuentaOrigen número de cuenta de origen.
@@ -256,8 +243,7 @@ public class Banco {
      * @param categoria categoría de la transacción.
      * @throws Exception si los números de cuenta no existen.
      */
-    public void realizarTransferencia(String numeroCuentaOrigen, String numeroCuentaDestino, float monto,
-                                      CategoriaTransaccion categoria) throws Exception{
+    public void realizarTransferencia(String numeroCuentaOrigen, String numeroCuentaDestino, float monto, CategoriaTransaccion categoria) throws Exception{
         CuentaAhorros cuentaOrigen = obtenerCuentaAhorros(numeroCuentaOrigen);
         CuentaAhorros cuentaDestino = obtenerCuentaAhorros(numeroCuentaDestino);
 
@@ -289,7 +275,7 @@ public class Banco {
      */
     public CuentaAhorros obtenerCuentaAhorros(String numeroCuenta){
         for(int i = 0; i < cuentasAhorros.size(); i++){
-            if(cuentasAhorros.get(i).getCuenta().equals(numeroCuenta)){
+            if(cuentasAhorros.get(i).getNumeroCuenta().equals(numeroCuenta)){
                 return cuentasAhorros.get(i);
             }
         }
@@ -318,5 +304,14 @@ public class Banco {
             }
         }
         return saldo;
+    }
+
+    public CuentaAhorros consultarCuenta(String numeroIdentificacion) {
+        for (CuentaAhorros cuentaAhorros : cuentasAhorros){
+            if (cuentaAhorros.getPropietario().getNumeroIdentificacion().equalsIgnoreCase(numeroIdentificacion)){
+                return cuentaAhorros;
+            }
+        }
+        return null;
     }
 }

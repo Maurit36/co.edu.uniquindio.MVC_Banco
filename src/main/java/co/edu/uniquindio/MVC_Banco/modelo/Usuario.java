@@ -12,11 +12,10 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Usuario {
-
     @EqualsAndHashCode.Include
     private final String numeroIdentificacion;
-    private final String nombre;
-    private final String direccion;
-    private final String correoElectronico;
-    private final String contrasena;
+    private String nombre;
+    private String direccion;
+    private String correoElectronico;
+    private String contrasena;
 }

@@ -5,15 +5,17 @@ import co.edu.uniquindio.MVC_Banco.modelo.Sesion;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class ActualizarControlador{
-
+public class ActualizarControlador implements Initializable {
     @FXML
     private TextField txtIdentificacion;
     @FXML
@@ -29,37 +31,31 @@ public class ActualizarControlador{
 
     public void actualizarUsuario(ActionEvent actionEvent) {
         try {
-
-
-            banco.actualizarUsuario(txtNombre.getText(), txtDireccion.getText(), txtIdentificacion.getText(), txtCorreo.getText(), txtPassword.getText());
-
+            banco.actualizarUsuario(txtNombre.getText(), txtDireccion.getText(), sesion.getUsuario().getNumeroIdentificacion(), txtCorreo.getText(), txtPassword.getText());
             // Se muestra un mensaje de éxito y se cierra la ventana
             crearAlerta("Los datos del usuario han sido actualizados correctamente", Alert.AlertType.INFORMATION);
             cerrarVentana();
-
-            navegarVentana("/panelCliente.fxml", "Banco - Panel principal");
-
         }catch (Exception e){
             crearAlerta(e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
-    public void crearAlerta(String mensaje, Alert.AlertType tipo){
-        Alert alert = new Alert(tipo);
-        alert.setTitle("Alerta");
-        alert.setHeaderText(null);
-        alert.setContentText(mensaje);
-        alert.showAndWait();
-    }
-
-    public void cerrarVentana(){
-        Stage stage = (Stage) txtIdentificacion.getScene().getWindow();
-        stage.close();
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        String nombre = sesion.getUsuario().getNombre();
+        txtNombre.setText(nombre);
+        String numeroIdentificacion = sesion.getUsuario().getNumeroIdentificacion();
+        txtIdentificacion.setText(numeroIdentificacion);
+        String correo = sesion.getUsuario().getCorreoElectronico();
+        txtCorreo.setText(correo);
+        String password = sesion.getUsuario().getContrasena();
+        txtPassword.setText(password);
+        String direccion = sesion.getUsuario().getDireccion();
+        txtDireccion.setText(direccion);
     }
 
     public void navegarVentana(String nombreArchivoFxml, String tituloVentana) {
         try {
-
             // Cargar la vista
             FXMLLoader loader = new FXMLLoader(getClass().getResource(nombreArchivoFxml));
             Parent root = loader.load();
@@ -79,5 +75,19 @@ public class ActualizarControlador{
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void crearAlerta(String mensaje, Alert.AlertType tipo){
+        Alert alert = new Alert(tipo);
+        alert.setTitle("Alerta");
+        alert.setHeaderText(null);
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+
+    public void cerrarVentana(){
+        Stage stage = (Stage) txtIdentificacion.getScene().getWindow();
+        stage.close();
+        navegarVentana("/panelCliente.fxml", "Banco - Panel principal");
     }
 }
