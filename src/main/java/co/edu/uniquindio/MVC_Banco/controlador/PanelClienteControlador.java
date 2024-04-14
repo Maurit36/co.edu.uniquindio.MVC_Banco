@@ -57,7 +57,7 @@ public class PanelClienteControlador implements Initializable, Observable {
         try {
             if(usuario != null){
                 cuenta = banco.consultarCuenta(usuario.getNumeroIdentificacion());
-                sesion.setCuenta(cuenta);
+                sesion.setCuentaAhorros(cuenta);
 
                 labelNombre.setText(usuario.getNombre());
                 labelCuenta.setText(cuenta.getNumeroCuenta());
@@ -90,7 +90,7 @@ public class PanelClienteControlador implements Initializable, Observable {
 
     public void consultarSaldo(ActionEvent event){
         String saldo = banco.consultarSaldo(sesion.getUsuario().getNumeroIdentificacion());
-        crearAlerta("El saldo actual de su cuenta es de: " + saldo, Alert.AlertType.INFORMATION);
+        crearAlerta("El saldo actual de su cuenta de ahorros es de: $ " + saldo, Alert.AlertType.INFORMATION);
     }
 
     private void crearAlerta(String mensaje, Alert.AlertType tipo) {

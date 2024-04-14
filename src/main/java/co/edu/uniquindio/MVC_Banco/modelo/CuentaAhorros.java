@@ -22,7 +22,7 @@ public class CuentaAhorros {
     private final List<Transaccion> transacciones;
     public static CuentaAhorros INSTANCIA;
 
-    private CuentaAhorros(String numeroCuenta, Usuario propietario, float saldoInicial) {
+    public CuentaAhorros(String numeroCuenta, Usuario propietario, float saldoInicial) {
         this.numeroCuenta = numeroCuenta;
         this.propietario = propietario;
         this.saldo = saldoInicial;

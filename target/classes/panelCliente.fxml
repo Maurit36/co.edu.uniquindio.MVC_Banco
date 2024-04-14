@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.control.cell.PropertyValueFactory?>
-<VBox prefHeight="600.0" prefWidth="800.0" spacing="30.0" style="-fx-padding: 40; -fx-background-color: #faf6f0; " xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.MVC_Banco.controlador.PanelClienteControlador">
+<VBox prefHeight="600.0" prefWidth="900.0" spacing="30.0" style="-fx-padding: 40; -fx-background-color: #faf6f0; " xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.MVC_Banco.controlador.PanelClienteControlador">
       <HBox prefHeight="100.0" prefWidth="200.0">
         <Label text="Panel Principal de Administración" textAlignment="JUSTIFY" wrapText="true">
            <font>
@@ -25,7 +25,7 @@
         <MenuButton contentDisplay="RIGHT" mnemonicParsing="false" text="Menú" textAlignment="JUSTIFY" HBox.hgrow="ALWAYS">
           <items>
             <MenuItem mnemonicParsing="false" onAction="#actualizarDatos" text="Actualizar Datos" />
-            <MenuItem mnemonicParsing="false" onAction="#cerrarVentana" text="Cerrar Sesión" />
+            <MenuItem mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesión" />
           </items>
         </MenuButton>
       </HBox>
@@ -46,7 +46,7 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="labelCuenta" alignment="TOP_RIGHT" contentDisplay="TOP" text="000" textAlignment="RIGHT" HBox.hgrow="ALWAYS">
+            <Label fx:id="labelCuenta" alignment="TOP_RIGHT" contentDisplay="TOP" text="0000000000" textAlignment="RIGHT" HBox.hgrow="ALWAYS">
                <font>
                   <Font size="15.0" />
                </font>
@@ -81,7 +81,7 @@
          </columnResizePolicy>
       </TableView>
       <HBox focusTraversable="true" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
-            <Button minHeight="40.0" minWidth="130.0" mnemonicParsing="false" onAction="#consultarSaldo" style="-fx-background-color: #fcb203;             -fx-text-fill: black;" text="Consultar" textFill="WHITE" />
-            <Button minHeight="40.0" minWidth="130.0" mnemonicParsing="false" onAction="#irTransferencia" style="-fx-background-color: #fcb203;             -fx-text-fill: black;" text="Transferir" textFill="WHITE" />
+            <Button minHeight="40.0" minWidth="130.0" mnemonicParsing="false" onAction="#consultarSaldo" style="-fx-background-color: #fcb203; -fx-text-fill: black;" text="Consultar" textFill="WHITE" />
+            <Button minHeight="40.0" minWidth="130.0" mnemonicParsing="false" onAction="#irTransferencia" style="-fx-background-color: #fcb203; -fx-text-fill: black;" text="Transferir" textFill="WHITE" />
       </HBox>
 </VBox>

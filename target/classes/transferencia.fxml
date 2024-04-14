@@ -19,14 +19,14 @@
     </Label>
 
     <GridPane alignment="CENTER" hgap="10.0" vgap="10.0">
-        <Label text="Número de cuenta:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-        <TextField fx:id="txtNumeroCuenta" minHeight="30.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <Label text="Número de Cuenta:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <TextField fx:id="txtCuenta" minHeight="30.0" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-        <Label text="Monto a transferir:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <Label text="Monto a Transferir:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
         <TextField fx:id="txtMonto" minHeight="30.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
         <Label text="Categoría:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-      <ComboBox editable="true" nodeOrientation="LEFT_TO_RIGHT" prefWidth="150.0" style="-fx-border-color: #060070;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <ComboBox fx:id="txtCategoria" onAction="#seleccionar" editable="true" nodeOrientation="LEFT_TO_RIGHT" prefWidth="150.0" style="-fx-border-color: #060070;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         <columnConstraints>
             <ColumnConstraints />
             <ColumnConstraints />
@@ -40,6 +40,6 @@
         </rowConstraints>
     </GridPane>
 
-    <Button minHeight="40.0" minWidth="130.0" onAction="#transferir" style="-fx-background-color: #fcb203;     -fx-text-fill: black;" text="Transferir" />
+    <Button minHeight="40.0" minWidth="130.0" onAction="#transferir" style="-fx-background-color: #fcb203; -fx-text-fill: black;" text="Transferir" />
 
 </VBox>

@@ -2,8 +2,6 @@ package co.edu.uniquindio.MVC_Banco.modelo;
 
 import co.edu.uniquindio.MVC_Banco.modelo.enums.CategoriaTransaccion;
 import lombok.Getter;
-import lombok.Setter;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -55,27 +53,21 @@ public class Banco {
         if(numeroIdentificacion == null || numeroIdentificacion.isBlank()){
             throw new Exception("El número de identificación es obligatorio");
         }
-
         if(obtenerUsuario(numeroIdentificacion) != null){
             throw new Exception("Ya existe un usuario con el número de identificación: "+numeroIdentificacion);
         }
-
         if(nombre == null || nombre.isBlank()){
             throw new Exception("El nombre es obligatorio");
         }
-
         if(correoElectronico == null || correoElectronico.isBlank()){
             throw new Exception("El correo electronico es obligatorio");
         }
-
         if(direccion == null || direccion.isBlank()){
             throw new Exception("La dirección es obligatorio");
         }
-
         if(contrasena == null || contrasena.isBlank()){
             throw new Exception("La contraseña es obligatoria");
         }
-
         if(contrasena.length() < 3){
             throw new Exception("La contraseña debe tener mínimo 3 caracteres");
         }
@@ -98,25 +90,21 @@ public class Banco {
      * @param correoElectronico correo electrónico del usuario.
      * @param contrasena contraseña del usuario.
      */
-    public void actualizarUsuario(String numeroIdentificacion, String nombre, String correoElectronico, String direccion, String contrasena) throws Exception{
-        if(obtenerUsuario(numeroIdentificacion) == null){
-            throw new Exception("No existe un usuario con el número de identificación: "+numeroIdentificacion);
-        }
-
+    public void actualizarUsuario(String nombre, String correoElectronico, String numeroIdentificacion, String direccion, String contrasena) throws Exception{
         if(nombre == null || nombre.isBlank()){
             throw new Exception("El nombre es obligatorio");
         }
-
         if(correoElectronico == null || correoElectronico.isBlank()){
             throw new Exception("El correo electronico es obligatorio");
         }
-
         if(direccion == null || direccion.isBlank()){
             throw new Exception("La dirección es obligatoria");
         }
-
         if(contrasena == null || contrasena.isBlank()){
             throw new Exception("La contraseña es obligatoria");
+        }
+        if(obtenerUsuario(numeroIdentificacion) == null){
+            throw new Exception("No existe un usuario con el número de identificación: " + numeroIdentificacion);
         }
 
         Usuario usuario = obtenerUsuario(numeroIdentificacion);
@@ -250,7 +238,7 @@ public class Banco {
         if(cuentaOrigen != null && cuentaDestino != null){
             cuentaOrigen.transferir(monto, cuentaDestino, categoria);
         }else{
-            throw new Exception("Error con los números de cuenta");
+            throw new Exception("El número de cuenta está errado");
         }
     }
 

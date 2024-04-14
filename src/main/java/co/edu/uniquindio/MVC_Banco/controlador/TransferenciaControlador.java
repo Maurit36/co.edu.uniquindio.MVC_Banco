@@ -30,20 +30,21 @@ public class TransferenciaControlador implements Initializable {
     private CategoriaTransaccion categoriaTransaccion;
 
     public void transferir(ActionEvent actionEvent){
-        try{
-            String numeroCuenta = txtCuenta.getText();
+        try {
+            String cuentaOrigen = sesion.getCuentaAhorros().getNumeroCuenta();
+            String cuentaDestino = txtCuenta.getText();
             float monto = Float.parseFloat(txtMonto.getText());
-            CategoriaTransaccion categoria = txtCategoria.getValue();
-            String numeroCuentaOrigen = sesion.getCuentaAhorros().getNumeroCuenta();
+            CategoriaTransaccion categoria = categoriaTransaccion;
 
-            if(numeroCuenta.isEmpty() || monto <= 0 || categoria == null){
-                crearAlerta("Todos los campos son obligatorios", Alert.AlertType.ERROR);
-            }else{
-                banco.realizarTransferencia(numeroCuentaOrigen, numeroCuenta, monto, categoria);
+            if (cuentaDestino.isEmpty() || monto <= 0 || categoria == null){
+                crearAlerta("Todos los datos son obligatorios", Alert.AlertType.INFORMATION);
+            }else {
+                banco.realizarTransferencia(cuentaOrigen,cuentaDestino, monto,categoria);
+                crearAlerta("Transferencia realizada con éxito", Alert.AlertType.INFORMATION);
                 observable.notificar();
                 cerrarVentana();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             crearAlerta(e.getMessage(), Alert.AlertType.ERROR);
         }
     }

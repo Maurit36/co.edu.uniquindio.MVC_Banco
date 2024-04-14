@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.control.cell.PropertyValueFactory?>
-<VBox prefHeight="600.0" prefWidth="800.0" spacing="30.0" style="-fx-padding: 40; -fx-background-color: #faf6f0; " xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.MVC_Banco.controlador.PanelClienteControlador">
+<VBox prefHeight="600.0" prefWidth="900.0" spacing="30.0" style="-fx-padding: 40; -fx-background-color: #faf6f0; " xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.MVC_Banco.controlador.PanelClienteControlador">
       <HBox prefHeight="100.0" prefWidth="200.0">
         <Label text="Panel Principal de Administración" textAlignment="JUSTIFY" wrapText="true">
            <font>
